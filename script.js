@@ -197,11 +197,30 @@ const aboutModal = document.querySelector("#aboutModal");
 const openAbout = document.querySelector("#openAbout");
 const openAboutHero = document.querySelector("#openAboutHero");
 const closeAbout = document.querySelector("#closeAbout");
+let builderPlainText = builderResult.textContent;
 
 function showToast(message = "คัดลอกแล้ว") {
   toast.textContent = message;
   toast.classList.add("show");
   window.setTimeout(() => toast.classList.remove("show"), 1600);
+}
+
+function escapeHtml(text) {
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function highlightPlaceholders(text) {
+  return escapeHtml(text).replace(/\[[^\]]+\]/g, (match) => `<span class="placeholder-token">${match}</span>`);
+}
+
+function setBuilderResult(text) {
+  builderPlainText = text;
+  builderResult.innerHTML = highlightPlaceholders(text);
 }
 
 async function copyText(text) {
@@ -283,7 +302,7 @@ function renderPrompts() {
   promptGrid.querySelectorAll("[data-fill]").forEach((button) => {
     const item = filtered[Number(button.dataset.fill)];
     button.addEventListener("click", () => {
-      builderResult.value = item.prompt;
+      setBuilderResult(item.prompt);
       showToast("ใส่ใน Builder แล้ว");
       document.querySelector("#builder").scrollIntoView({ behavior: "smooth" });
     });
@@ -317,7 +336,7 @@ builderForm.addEventListener("submit", (event) => {
   const output = data.get("output") || "ชิ้นงานสำหรับใช้ในการสอน";
   const tone = data.get("tone") || "ภาษาครู เข้าใจง่าย";
 
-  builderResult.value = `คุณคือครู สกร. ที่เชี่ยวชาญการออกแบบการเรียนรู้สำหรับผู้เรียนผู้ใหญ่
+  setBuilderResult(`คุณคือครู สกร. ที่เชี่ยวชาญการออกแบบการเรียนรู้สำหรับผู้เรียนผู้ใหญ่
 ช่วยสร้าง${output}
 รายวิชา: ${subject}
 ระดับผู้เรียน: ${level}
@@ -330,10 +349,10 @@ builderForm.addEventListener("submit", (event) => {
 - เชื่อมโยงกับชีวิตจริงหรือประสบการณ์ของผู้เรียน
 - จัดรูปแบบให้นำไปใช้ในเอกสารได้ทันที
 - หากเหมาะสม ให้มีคำชี้แจง กิจกรรม คำถามสะท้อนคิด และเกณฑ์ประเมินแบบง่าย
-- ระบุข้อควรตรวจทานก่อนนำไปใช้จริง เช่น ความถูกต้องของหลักสูตร ชื่อหน่วยงาน วันที่ และข้อมูลผู้เรียน`;
+- ระบุข้อควรตรวจทานก่อนนำไปใช้จริง เช่น ความถูกต้องของหลักสูตร ชื่อหน่วยงาน วันที่ และข้อมูลผู้เรียน`);
 });
 
-copyBuilder.addEventListener("click", () => copyText(builderResult.value));
+copyBuilder.addEventListener("click", () => copyText(builderPlainText));
 
 document.querySelectorAll("[data-example]").forEach((button) => {
   button.addEventListener("click", () => copyText(examplePrompts[button.dataset.example]));

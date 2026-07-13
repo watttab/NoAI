@@ -38,7 +38,8 @@ a {
 button,
 input,
 select,
-textarea {
+textarea,
+.prompt-preview {
   font: inherit;
 }
 
@@ -460,7 +461,8 @@ pre {
 
 input,
 select,
-textarea {
+textarea,
+.prompt-preview {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -555,9 +557,22 @@ textarea {
   padding: 1rem;
 }
 
+.prompt-preview {
+  min-height: 24rem;
+  padding: 1rem;
+  white-space: pre-wrap;
+  overflow: auto;
+}
+
+.placeholder-token {
+  color: var(--red-soft);
+  font-weight: 800;
+}
+
 input:focus,
 select:focus,
-textarea:focus {
+textarea:focus,
+.prompt-preview:focus {
   border-color: var(--red-soft);
   box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.18);
 }
@@ -629,7 +644,7 @@ textarea:focus {
   padding: 0.4rem 0.7rem;
 }
 
-.builder-output textarea {
+.builder-output .prompt-preview {
   min-height: 30rem;
   border: 0;
   border-radius: 0;
