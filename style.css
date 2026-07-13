@@ -229,7 +229,9 @@ h3 {
 .preview-sheet,
 .preview-report,
 .preview-plan,
-.modal {
+.modal,
+.personal-stats,
+.stats-grid article {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
@@ -361,6 +363,56 @@ pre {
 .context-strip span {
   color: var(--muted);
   font-size: 0.92rem;
+}
+
+.personal-stats {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.65fr) minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 4rem;
+  padding: 1rem;
+}
+
+.personal-stats h2 {
+  margin-bottom: 0.25rem;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+}
+
+.personal-stats p:not(.eyebrow) {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.stats-grid article {
+  min-height: 6rem;
+  padding: 0.8rem;
+  box-shadow: none;
+}
+
+.stats-grid span,
+.stats-grid strong {
+  display: block;
+}
+
+.stats-grid span {
+  color: var(--red-soft);
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  font-weight: 800;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.stats-grid strong {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.78rem;
 }
 
 .category-chip,
@@ -827,8 +879,13 @@ textarea:focus,
   .prompt-grid,
   .pack-list,
   .map-grid,
-  .example-grid {
+  .example-grid,
+  .personal-stats {
     grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .context-strip {
@@ -864,6 +921,10 @@ textarea:focus,
 
   .select-box {
     width: 100%;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
   }
 
   h1 {

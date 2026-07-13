@@ -329,7 +329,70 @@ const aboutModal = document.querySelector("#aboutModal");
 const openAbout = document.querySelector("#openAbout");
 const openAboutHero = document.querySelector("#openAboutHero");
 const closeAbout = document.querySelector("#closeAbout");
+const statCopies = document.querySelector("#statCopies");
+const statBuilders = document.querySelector("#statBuilders");
+const statCategory = document.querySelector("#statCategory");
+const statBadge = document.querySelector("#statBadge");
+const resetStats = document.querySelector("#resetStats");
 let builderPlainText = builderResult.textContent;
+const STATS_KEY = "noai-local-stats";
+let localStats = loadLocalStats();
+
+function loadLocalStats() {
+  try {
+    return {
+      copies: 0,
+      builders: 0,
+      lastCategory: "ยังไม่เลือก",
+      ...JSON.parse(localStorage.getItem(STATS_KEY) || "{}")
+    };
+  } catch (error) {
+    return {
+      copies: 0,
+      builders: 0,
+      lastCategory: "ยังไม่เลือก"
+    };
+  }
+}
+
+function saveLocalStats() {
+  localStorage.setItem(STATS_KEY, JSON.stringify(localStats));
+}
+
+function getLocalBadge() {
+  if (localStats.copies >= 50 || localStats.builders >= 20) {
+    return "ครูสายโปร";
+  }
+  if (localStats.copies >= 20 || localStats.builders >= 8) {
+    return "สายลุยงานด่วน";
+  }
+  if (localStats.copies >= 5 || localStats.builders >= 3) {
+    return "เริ่มคล่องแล้ว";
+  }
+  return "เริ่มลองของ";
+}
+
+function renderLocalStats() {
+  statCopies.textContent = localStats.copies;
+  statBuilders.textContent = localStats.builders;
+  statCategory.textContent = localStats.lastCategory || "ยังไม่เลือก";
+  statBadge.textContent = getLocalBadge();
+}
+
+function updateLocalStats(updates = {}) {
+  localStats = {
+    ...localStats,
+    ...updates
+  };
+  saveLocalStats();
+  renderLocalStats();
+}
+
+function incrementLocalStat(key) {
+  updateLocalStats({
+    [key]: (Number(localStats[key]) || 0) + 1
+  });
+}
 
 function showToast(message = "คัดลอกแล้ว") {
   toast.textContent = message;
@@ -371,6 +434,7 @@ async function copyText(text, eventName = "copy_text", eventParams = {}) {
       helper.remove();
     }
     showToast();
+    incrementLocalStat("copies");
     trackEvent(eventName, eventParams);
   } catch (error) {
     showToast("คัดลอกไม่สำเร็จ");
@@ -458,6 +522,9 @@ function setCategory(category) {
     chip.classList.toggle("active", chip.dataset.category === category);
   });
   renderPrompts();
+  updateLocalStats({
+    lastCategory: category
+  });
   trackEvent("select_category", {
     prompt_category: category
   });
@@ -507,6 +574,7 @@ builderForm.addEventListener("submit", (event) => {
     output_type: output,
     level
   });
+  incrementLocalStat("builders");
 });
 
 copyBuilder.addEventListener("click", () => copyText(builderPlainText, "copy_builder_prompt"));
@@ -530,6 +598,17 @@ function closeModal() {
 openAbout.addEventListener("click", openModal);
 openAboutHero.addEventListener("click", openModal);
 closeAbout.addEventListener("click", closeModal);
+resetStats.addEventListener("click", () => {
+  localStats = {
+    copies: 0,
+    builders: 0,
+    lastCategory: "ยังไม่เลือก"
+  };
+  saveLocalStats();
+  renderLocalStats();
+  showToast("ล้างสถิติแล้ว");
+  trackEvent("reset_local_stats");
+});
 aboutModal.addEventListener("click", (event) => {
   if (event.target === aboutModal) {
     closeModal();
@@ -542,6 +621,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 initAnalytics();
+renderLocalStats();
 
 window.setTimeout(() => {
   if (!localStorage.getItem("noai-about-seen")) {

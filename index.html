@@ -67,6 +67,33 @@
         </article>
       </section>
 
+      <section class="personal-stats" aria-labelledby="stats-title">
+        <div>
+          <p class="eyebrow">Your No.AI</p>
+          <h2 id="stats-title">สถิติของคุณ</h2>
+          <p>เก็บเฉพาะใน browser เครื่องนี้ ล้างได้ทุกเมื่อ ไม่ใช่ยอดรวมทั้งเว็บ</p>
+        </div>
+        <div class="stats-grid" aria-live="polite">
+          <article>
+            <span id="statCopies">0</span>
+            <strong>คัดลอก prompt</strong>
+          </article>
+          <article>
+            <span id="statBuilders">0</span>
+            <strong>ใช้ Builder</strong>
+          </article>
+          <article>
+            <span id="statCategory">ยังไม่เลือก</span>
+            <strong>หมวดล่าสุด</strong>
+          </article>
+          <article>
+            <span id="statBadge">เริ่มลองของ</span>
+            <strong>สถานะวันนี้</strong>
+          </article>
+        </div>
+        <button class="copy-small" id="resetStats" type="button">ล้างสถิติของฉัน</button>
+      </section>
+
       <section class="ai-map" id="ai-map" aria-labelledby="ai-map-title">
         <div class="section-heading">
           <p class="eyebrow">AI Work Map</p>
