@@ -36,7 +36,7 @@
           <div class="hero-actions">
             <a class="button primary" href="#builder">สร้าง Prompt</a>
             <a class="button secondary" href="#library">ดูคลัง Prompt</a>
-            <button class="button ghost" id="openAboutHero" type="button">ที่มาของ NoAI</button>
+            <button class="button ghost" id="openAboutHero" type="button">ที่มาของ No.AI</button>
           </div>
         </div>
         <aside class="hero-panel" aria-label="ตัวอย่าง prompt">
@@ -89,6 +89,10 @@
         <button class="category-chip" data-category="โครงการ">โครงการ</button>
         <button class="category-chip" data-category="วิเคราะห์ผู้เรียน">วิเคราะห์ผู้เรียน</button>
       </section>
+      <div class="category-scroll-note" aria-hidden="true">
+        <span>เลื่อนดูหมวดเพิ่มเติม</span>
+        <b>→</b>
+      </div>
 
       <section class="workspace" id="library" aria-labelledby="library-title">
         <div class="section-heading">
@@ -100,18 +104,21 @@
             <span>ค้นหา</span>
             <input id="searchInput" type="search" placeholder="เช่น ใบงาน ม.ต้น รายงานกิจกรรม">
           </label>
-          <label class="select-box">
+          <label class="select-box category-select-box">
             <span>หมวด</span>
-            <select id="categorySelect">
-              <option value="ทั้งหมด">ทั้งหมด</option>
-              <option value="แผนการสอน">แผนการสอน</option>
-              <option value="ใบงาน">ใบงาน</option>
-              <option value="รายงาน">รายงาน</option>
-              <option value="ประเมินผล">ประเมินผล</option>
-              <option value="สื่อการสอน">สื่อการสอน</option>
-              <option value="โครงการ">โครงการ</option>
-              <option value="วิเคราะห์ผู้เรียน">วิเคราะห์ผู้เรียน</option>
-            </select>
+            <span class="select-wrap">
+              <select id="categorySelect">
+                <option value="ทั้งหมด">ทั้งหมด</option>
+                <option value="แผนการสอน">แผนการสอน</option>
+                <option value="ใบงาน">ใบงาน</option>
+                <option value="รายงาน">รายงาน</option>
+                <option value="ประเมินผล">ประเมินผล</option>
+                <option value="สื่อการสอน">สื่อการสอน</option>
+                <option value="โครงการ">โครงการ</option>
+                <option value="วิเคราะห์ผู้เรียน">วิเคราะห์ผู้เรียน</option>
+              </select>
+            </span>
+            <small class="select-hint">แตะเพื่อเปิดรายการหมวดเพิ่มเติม</small>
           </label>
         </div>
         <div class="prompt-grid" id="promptGrid"></div>
@@ -242,23 +249,16 @@
       <section class="modal" role="dialog" aria-modal="true" aria-labelledby="about-title">
         <button class="modal-close" id="closeAbout" type="button" aria-label="ปิด">×</button>
         <p class="eyebrow">Project Origin</p>
-        <h2 id="about-title">ที่มาของ NoAI</h2>
+        <h2 id="about-title">ที่มาของ No.AI</h2>
         <p>
-          NoAI เริ่มจากคำถามของครู สกร. ที่อยากมีเว็บแจก prompt สำหรับงานครูโดยเฉพาะ
-          ไม่ใช่คลังคำสั่งกว้าง ๆ แต่เป็นเครื่องมือที่ช่วยลดเวลางานเอกสาร งานสอน และงานพัฒนาผู้เรียน
+          โปรเจค No.AI เริ่มจากคำถามของครู สกร. คนหนึ่ง ที่อยากมีเว็บรวม prompt ด่วนๆ
+          สำหรับงานครู สกร.โดยเฉพาะ ไม่ใช่คลังคำสั่งกว้าง ๆ แต่เป็นเครื่องมือที่ช่วยลดเวลางานเอกสาร
+          งานสอน และงานพัฒนาผู้เรียน รวมถึงงานอื่นๆ
         </p>
         <p>
           แนวคิดของเว็บคือให้ครูเลือก “งานที่ต้องทำ” ก่อน แล้วระบบช่วยประกอบ prompt
           ให้มีบริบทของผู้เรียนผู้ใหญ่ การพบกลุ่ม รายวิชา ระดับผู้เรียน และรูปแบบเอกสารที่ใช้ได้จริง
         </p>
-        <div class="source-note">
-          อ้างอิงบริบทจากโครงสร้างหน่วยงานของกระทรวงศึกษาธิการที่ระบุกรมส่งเสริมการเรียนรู้
-          และแนวทางแหล่งความรู้/บริการดาวน์โหลด/e-Book/สถิติการศึกษาของ ศธ.
-          <div class="source-links">
-            <a href="https://www.moe.go.th/department-of-learning-encouragement/" target="_blank" rel="noreferrer">กรมส่งเสริมการเรียนรู้</a>
-            <a href="https://www.moe.go.th/legal-and-regulatory-information/" target="_blank" rel="noreferrer">กฎหมายและกฎเกณฑ์ ศธ.</a>
-          </div>
-        </div>
       </section>
     </div>
     <div class="toast" id="toast" role="status" aria-live="polite">คัดลอกแล้ว</div>
