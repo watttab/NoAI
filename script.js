@@ -1,3 +1,33 @@
+const GA_MEASUREMENT_ID = "";
+
+function initAnalytics() {
+  if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === "G-XXXXXXXXXX") {
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  document.head.appendChild(script);
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+  window.gtag("js", new Date());
+  window.gtag("config", GA_MEASUREMENT_ID, {
+    anonymize_ip: true
+  });
+}
+
+function trackEvent(name, params = {}) {
+  if (typeof window.gtag !== "function") {
+    return;
+  }
+
+  window.gtag("event", name, params);
+}
+
 const prompts = [
   {
     title: "สร้างแผนการจัดการเรียนรู้",
@@ -325,7 +355,7 @@ function setBuilderResult(text) {
   builderResult.innerHTML = highlightPlaceholders(text);
 }
 
-async function copyText(text) {
+async function copyText(text, eventName = "copy_text", eventParams = {}) {
   try {
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(text);
@@ -341,6 +371,7 @@ async function copyText(text) {
       helper.remove();
     }
     showToast();
+    trackEvent(eventName, eventParams);
   } catch (error) {
     showToast("คัดลอกไม่สำเร็จ");
   }
@@ -361,6 +392,9 @@ function renderAiMap() {
 
   aiMap.querySelectorAll("[data-map]").forEach((button) => {
     button.addEventListener("click", () => {
+      trackEvent("ai_map_category_click", {
+        prompt_category: button.dataset.map
+      });
       setCategory(button.dataset.map);
       document.querySelector("#library").scrollIntoView({ behavior: "smooth" });
     });
@@ -398,7 +432,10 @@ function renderPrompts() {
 
   promptGrid.querySelectorAll("[data-copy]").forEach((button) => {
     const item = filtered[Number(button.dataset.copy)];
-    button.addEventListener("click", () => copyText(item.prompt));
+    button.addEventListener("click", () => copyText(item.prompt, "copy_prompt", {
+      prompt_title: item.title,
+      prompt_category: item.category
+    }));
   });
 
   promptGrid.querySelectorAll("[data-fill]").forEach((button) => {
@@ -406,6 +443,10 @@ function renderPrompts() {
     button.addEventListener("click", () => {
       setBuilderResult(item.prompt);
       showToast("ใส่ใน Builder แล้ว");
+      trackEvent("fill_builder_from_prompt", {
+        prompt_title: item.title,
+        prompt_category: item.category
+      });
       document.querySelector("#builder").scrollIntoView({ behavior: "smooth" });
     });
   });
@@ -417,9 +458,19 @@ function setCategory(category) {
     chip.classList.toggle("active", chip.dataset.category === category);
   });
   renderPrompts();
+  trackEvent("select_category", {
+    prompt_category: category
+  });
 }
 
-searchInput.addEventListener("input", renderPrompts);
+let hasTrackedSearch = false;
+searchInput.addEventListener("input", () => {
+  renderPrompts();
+  if (!hasTrackedSearch && searchInput.value.trim().length > 0) {
+    hasTrackedSearch = true;
+    trackEvent("search_used");
+  }
+});
 categorySelect.addEventListener("change", () => {
   setCategory(categorySelect.value);
 });
@@ -452,17 +503,24 @@ builderForm.addEventListener("submit", (event) => {
 - จัดรูปแบบให้นำไปใช้ในเอกสารได้ทันที
 - หากเหมาะสม ให้มีคำชี้แจง กิจกรรม คำถามสะท้อนคิด และเกณฑ์ประเมินแบบง่าย
 - ระบุข้อควรตรวจทานก่อนนำไปใช้จริง เช่น ความถูกต้องของหลักสูตร ชื่อหน่วยงาน วันที่ และข้อมูลผู้เรียน`);
+  trackEvent("generate_builder_prompt", {
+    output_type: output,
+    level
+  });
 });
 
-copyBuilder.addEventListener("click", () => copyText(builderPlainText));
+copyBuilder.addEventListener("click", () => copyText(builderPlainText, "copy_builder_prompt"));
 
 document.querySelectorAll("[data-example]").forEach((button) => {
-  button.addEventListener("click", () => copyText(examplePrompts[button.dataset.example]));
+  button.addEventListener("click", () => copyText(examplePrompts[button.dataset.example], "copy_example_prompt", {
+    example_type: button.dataset.example
+  }));
 });
 
 function openModal() {
   aboutModal.hidden = false;
   closeAbout.focus();
+  trackEvent("open_about_modal");
 }
 
 function closeModal() {
@@ -482,6 +540,8 @@ document.addEventListener("keydown", (event) => {
     closeModal();
   }
 });
+
+initAnalytics();
 
 window.setTimeout(() => {
   if (!localStorage.getItem("noai-about-seen")) {
