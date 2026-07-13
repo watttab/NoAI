@@ -17,9 +17,10 @@
         <span>NoAI</span>
       </a>
       <nav class="top-nav" aria-label="เมนูหลัก">
+        <button class="nav-button" id="openAbout" type="button">ที่มาโปรเจกต์</button>
+        <a href="#ai-map">กรอบงาน AI</a>
         <a href="#library">คลัง Prompt</a>
         <a href="#builder">Prompt Builder</a>
-        <a href="#packs">ชุดงานครู</a>
       </nav>
     </header>
 
@@ -35,6 +36,7 @@
           <div class="hero-actions">
             <a class="button primary" href="#builder">สร้าง Prompt</a>
             <a class="button secondary" href="#library">ดูคลัง Prompt</a>
+            <button class="button ghost" id="openAboutHero" type="button">ที่มาของ NoAI</button>
           </div>
         </div>
         <aside class="hero-panel" aria-label="ตัวอย่าง prompt">
@@ -50,6 +52,33 @@
         </aside>
       </section>
 
+      <section class="context-strip" aria-label="แนวคิดของระบบ">
+        <article>
+          <strong>เน้นงานจริง</strong>
+          <span>พบกลุ่ม แผนการสอน ใบงาน รายงาน ประเมินผล และสื่อสำหรับผู้เรียนผู้ใหญ่</span>
+        </article>
+        <article>
+          <strong>คิดเป็นขั้นตอน</strong>
+          <span>เลือกงาน กรอกบริบท สร้าง prompt ดูตัวอย่างผลลัพธ์ แล้วคัดลอกไปใช้</span>
+        </article>
+        <article>
+          <strong>ใช้งบ 0 บาท</strong>
+          <span>เว็บ static บน GitHub Pages เหมาะกับครูที่อยากเริ่มทันทีโดยไม่เช่าเซิร์ฟเวอร์</span>
+        </article>
+      </section>
+
+      <section class="ai-map" id="ai-map" aria-labelledby="ai-map-title">
+        <div class="section-heading">
+          <p class="eyebrow">AI Work Map</p>
+          <h2 id="ai-map-title">กรอบงาน AI สำหรับครู สกร.</h2>
+          <p>
+            ออกแบบจากบริบทงานส่งเสริมการเรียนรู้ การศึกษานอกระบบ การเรียนรู้ตลอดชีวิต
+            และภาระงานที่ครูต้องทำซ้ำในแต่ละสัปดาห์
+          </p>
+        </div>
+        <div class="map-grid" id="aiMap"></div>
+      </section>
+
       <section class="quick-cats" aria-label="หมวดหมู่ยอดนิยม">
         <button class="category-chip active" data-category="ทั้งหมด">ทั้งหมด</button>
         <button class="category-chip" data-category="แผนการสอน">แผนการสอน</button>
@@ -57,6 +86,8 @@
         <button class="category-chip" data-category="รายงาน">รายงาน</button>
         <button class="category-chip" data-category="ประเมินผล">ประเมินผล</button>
         <button class="category-chip" data-category="สื่อการสอน">สื่อการสอน</button>
+        <button class="category-chip" data-category="โครงการ">โครงการ</button>
+        <button class="category-chip" data-category="วิเคราะห์ผู้เรียน">วิเคราะห์ผู้เรียน</button>
       </section>
 
       <section class="workspace" id="library" aria-labelledby="library-title">
@@ -78,6 +109,8 @@
               <option value="รายงาน">รายงาน</option>
               <option value="ประเมินผล">ประเมินผล</option>
               <option value="สื่อการสอน">สื่อการสอน</option>
+              <option value="โครงการ">โครงการ</option>
+              <option value="วิเคราะห์ผู้เรียน">วิเคราะห์ผู้เรียน</option>
             </select>
           </label>
         </div>
@@ -119,6 +152,17 @@
                 <option>แบบทดสอบพร้อมเฉลย</option>
                 <option>รายงานกิจกรรม</option>
                 <option>สื่อประกอบการสอน</option>
+                <option>แผนพบกลุ่มรายสัปดาห์</option>
+                <option>โครงการกิจกรรมพัฒนาผู้เรียน</option>
+              </select>
+            </label>
+            <label>
+              โทนภาษา
+              <select name="tone">
+                <option>ภาษาครู เข้าใจง่าย</option>
+                <option>ภาษาราชการ กระชับ</option>
+                <option>ภาษาสำหรับผู้เรียนผู้ใหญ่</option>
+                <option>ภาษาเชิงสร้างแรงบันดาลใจ</option>
               </select>
             </label>
             <button class="button primary full" type="submit">สร้าง Prompt</button>
@@ -130,6 +174,42 @@
             </div>
             <textarea id="builderResult" readonly>กรอกข้อมูลด้านซ้าย แล้วกดสร้าง Prompt</textarea>
           </div>
+        </div>
+      </section>
+
+      <section class="examples" id="examples" aria-labelledby="examples-title">
+        <div class="section-heading">
+          <p class="eyebrow">Output Preview</p>
+          <h2 id="examples-title">ตัวอย่างภาพงานที่ AI ช่วยร่างได้</h2>
+        </div>
+        <div class="example-grid">
+          <article class="preview-sheet">
+            <div class="sheet-head">
+              <span>ใบงาน</span>
+              <strong>การตั้งเป้าหมายชีวิต</strong>
+            </div>
+            <div class="sheet-line wide"></div>
+            <div class="sheet-line"></div>
+            <div class="question-box">1. เป้าหมายใน 6 เดือนของฉันคืออะไร?</div>
+            <div class="question-box">2. สิ่งที่ต้องลงมือทำในสัปดาห์นี้</div>
+            <button class="copy-small" type="button" data-example="worksheet">คัดลอก prompt แนวนี้</button>
+          </article>
+          <article class="preview-report">
+            <div class="report-title">รายงานผลกิจกรรม</div>
+            <dl>
+              <div><dt>วัตถุประสงค์</dt><dd>ส่งเสริมทักษะอาชีพและการเรียนรู้ตลอดชีวิต</dd></div>
+              <div><dt>ผลลัพธ์</dt><dd>ผู้เรียนทำชิ้นงานและสะท้อนการนำไปใช้จริง</dd></div>
+              <div><dt>ข้อเสนอแนะ</dt><dd>เพิ่มตัวอย่างใกล้ตัวและกิจกรรมกลุ่มย่อย</dd></div>
+            </dl>
+            <button class="copy-small" type="button" data-example="report">คัดลอก prompt แนวนี้</button>
+          </article>
+          <article class="preview-plan">
+            <div class="plan-row head"><span>ช่วงเวลา</span><span>กิจกรรม</span><span>หลักฐาน</span></div>
+            <div class="plan-row"><span>10 นาที</span><span>นำเข้าสู่บทเรียน</span><span>คำถาม</span></div>
+            <div class="plan-row"><span>40 นาที</span><span>ฝึกปฏิบัติ</span><span>ใบงาน</span></div>
+            <div class="plan-row"><span>10 นาที</span><span>สะท้อนคิด</span><span>บันทึก</span></div>
+            <button class="copy-small" type="button" data-example="plan">คัดลอก prompt แนวนี้</button>
+          </article>
         </div>
       </section>
 
@@ -158,6 +238,29 @@
       </section>
     </main>
 
+    <div class="modal-backdrop" id="aboutModal" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="about-title">
+        <button class="modal-close" id="closeAbout" type="button" aria-label="ปิด">×</button>
+        <p class="eyebrow">Project Origin</p>
+        <h2 id="about-title">ที่มาของ NoAI</h2>
+        <p>
+          NoAI เริ่มจากคำถามของครู สกร. ที่อยากมีเว็บแจก prompt สำหรับงานครูโดยเฉพาะ
+          ไม่ใช่คลังคำสั่งกว้าง ๆ แต่เป็นเครื่องมือที่ช่วยลดเวลางานเอกสาร งานสอน และงานพัฒนาผู้เรียน
+        </p>
+        <p>
+          แนวคิดของเว็บคือให้ครูเลือก “งานที่ต้องทำ” ก่อน แล้วระบบช่วยประกอบ prompt
+          ให้มีบริบทของผู้เรียนผู้ใหญ่ การพบกลุ่ม รายวิชา ระดับผู้เรียน และรูปแบบเอกสารที่ใช้ได้จริง
+        </p>
+        <div class="source-note">
+          อ้างอิงบริบทจากโครงสร้างหน่วยงานของกระทรวงศึกษาธิการที่ระบุกรมส่งเสริมการเรียนรู้
+          และแนวทางแหล่งความรู้/บริการดาวน์โหลด/e-Book/สถิติการศึกษาของ ศธ.
+          <div class="source-links">
+            <a href="https://www.moe.go.th/department-of-learning-encouragement/" target="_blank" rel="noreferrer">กรมส่งเสริมการเรียนรู้</a>
+            <a href="https://www.moe.go.th/legal-and-regulatory-information/" target="_blank" rel="noreferrer">กฎหมายและกฎเกณฑ์ ศธ.</a>
+          </div>
+        </div>
+      </section>
+    </div>
     <div class="toast" id="toast" role="status" aria-live="polite">คัดลอกแล้ว</div>
     <script src="script.js"></script>
   </body>
