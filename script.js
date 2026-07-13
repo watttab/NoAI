@@ -1,4 +1,4 @@
-const GA_MEASUREMENT_ID = "";
+const GA_MEASUREMENT_ID = "G-7GZKYSZTBN";
 
 function initAnalytics() {
   if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === "G-XXXXXXXXXX") {
