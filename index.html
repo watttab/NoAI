@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="คลัง Prompt สำหรับครู สกร. ใช้งานง่าย ค้นหาไว และปรับแต่งได้ตามงานจริง">
+    <title>NoAI | Prompt สำหรับครู สกร.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="NoAI หน้าแรก">
+        <span class="brand-mark">N</span>
+        <span>NoAI</span>
+      </a>
+      <nav class="top-nav" aria-label="เมนูหลัก">
+        <a href="#library">คลัง Prompt</a>
+        <a href="#builder">Prompt Builder</a>
+        <a href="#packs">ชุดงานครู</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">สำหรับครู สกร. ที่อยากใช้ AI ให้ทำงานได้จริง</p>
+          <h1 id="page-title">Prompt สำหรับครู สกร.<span class="typing-cursor" aria-hidden="true">|</span></h1>
+          <p class="hero-text">
+            ค้นหา prompt ตามงานประจำวัน สร้างคำสั่งเฉพาะรายวิชา แล้วคัดลอกไปใช้กับ AI ได้ทันที
+            โทนเรียบ เข้ม เร็ว และออกแบบให้เปิดมาใช้งานได้เลย
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#builder">สร้าง Prompt</a>
+            <a class="button secondary" href="#library">ดูคลัง Prompt</a>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="ตัวอย่าง prompt">
+          <div class="terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <pre><code>คุณคือครู สกร. ที่เชี่ยวชาญการออกแบบกิจกรรมสำหรับผู้เรียนผู้ใหญ่
+ช่วยสร้างใบงานรายวิชา [รายวิชา] ระดับ [ระดับ]
+หัวข้อ [หัวข้อ]
+ใช้ภาษาเข้าใจง่าย มีคำชี้แจง กิจกรรม คำถามสะท้อนคิด และเกณฑ์ประเมิน</code></pre>
+        </aside>
+      </section>
+
+      <section class="quick-cats" aria-label="หมวดหมู่ยอดนิยม">
+        <button class="category-chip active" data-category="ทั้งหมด">ทั้งหมด</button>
+        <button class="category-chip" data-category="แผนการสอน">แผนการสอน</button>
+        <button class="category-chip" data-category="ใบงาน">ใบงาน</button>
+        <button class="category-chip" data-category="รายงาน">รายงาน</button>
+        <button class="category-chip" data-category="ประเมินผล">ประเมินผล</button>
+        <button class="category-chip" data-category="สื่อการสอน">สื่อการสอน</button>
+      </section>
+
+      <section class="workspace" id="library" aria-labelledby="library-title">
+        <div class="section-heading">
+          <p class="eyebrow">Prompt Library</p>
+          <h2 id="library-title">เลือกงานที่ครูต้องทำวันนี้</h2>
+        </div>
+        <div class="tool-row">
+          <label class="search-box">
+            <span>ค้นหา</span>
+            <input id="searchInput" type="search" placeholder="เช่น ใบงาน ม.ต้น รายงานกิจกรรม">
+          </label>
+          <label class="select-box">
+            <span>หมวด</span>
+            <select id="categorySelect">
+              <option value="ทั้งหมด">ทั้งหมด</option>
+              <option value="แผนการสอน">แผนการสอน</option>
+              <option value="ใบงาน">ใบงาน</option>
+              <option value="รายงาน">รายงาน</option>
+              <option value="ประเมินผล">ประเมินผล</option>
+              <option value="สื่อการสอน">สื่อการสอน</option>
+            </select>
+          </label>
+        </div>
+        <div class="prompt-grid" id="promptGrid"></div>
+      </section>
+
+      <section class="builder" id="builder" aria-labelledby="builder-title">
+        <div class="section-heading">
+          <p class="eyebrow">Prompt Builder</p>
+          <h2 id="builder-title">กรอกข้อมูลงานครู แล้วให้เว็บประกอบ Prompt ให้</h2>
+        </div>
+        <div class="builder-layout">
+          <form class="builder-form" id="promptBuilder">
+            <label>
+              รายวิชา
+              <input name="subject" type="text" placeholder="เช่น ทักษะการเรียนรู้">
+            </label>
+            <label>
+              ระดับผู้เรียน
+              <select name="level">
+                <option>ประถม</option>
+                <option selected>ม.ต้น</option>
+                <option>ม.ปลาย</option>
+              </select>
+            </label>
+            <label>
+              หัวข้อ
+              <input name="topic" type="text" placeholder="เช่น การตั้งเป้าหมายชีวิต">
+            </label>
+            <label>
+              ลักษณะผู้เรียน
+              <input name="learner" type="text" placeholder="เช่น ผู้เรียนวัยทำงาน พื้นฐานต่างกัน">
+            </label>
+            <label>
+              ผลลัพธ์ที่ต้องการ
+              <select name="output">
+                <option>ใบงาน 1 หน้า</option>
+                <option>แผนการจัดการเรียนรู้</option>
+                <option>แบบทดสอบพร้อมเฉลย</option>
+                <option>รายงานกิจกรรม</option>
+                <option>สื่อประกอบการสอน</option>
+              </select>
+            </label>
+            <button class="button primary full" type="submit">สร้าง Prompt</button>
+          </form>
+          <div class="builder-output">
+            <div class="output-head">
+              <span>Prompt ที่สร้างแล้ว</span>
+              <button class="copy-small" id="copyBuilder" type="button">คัดลอก</button>
+            </div>
+            <textarea id="builderResult" readonly>กรอกข้อมูลด้านซ้าย แล้วกดสร้าง Prompt</textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="packs" id="packs" aria-labelledby="packs-title">
+        <div class="section-heading">
+          <p class="eyebrow">Work Packs</p>
+          <h2 id="packs-title">ชุดงานสำเร็จรูปสำหรับครู สกร.</h2>
+        </div>
+        <div class="pack-list">
+          <article>
+            <span>01</span>
+            <h3>ทำแผนการสอน 1 เรื่อง</h3>
+            <p>วิเคราะห์ผู้เรียน เขียนจุดประสงค์ ออกแบบกิจกรรม ทำใบงาน และเขียนบันทึกหลังสอน</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>เตรียมพบกลุ่ม</h3>
+            <p>สร้างกิจกรรมนำเข้าสู่บทเรียน คำถามชวนคิด สรุปสาระ และงานมอบหมายหลังพบกลุ่ม</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>รายงานกิจกรรม</h3>
+            <p>จัดโครงรายงาน วัตถุประสงค์ ขั้นตอน ผลการดำเนินงาน ปัญหา อุปสรรค และข้อเสนอแนะ</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">คัดลอกแล้ว</div>
+    <script src="script.js"></script>
+  </body>
+</html>
